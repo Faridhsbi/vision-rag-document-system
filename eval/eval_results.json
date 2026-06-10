@@ -1,0 +1,147 @@
+{
+  "total_questions": 6,
+  "successful_queries": 6,
+  "retrieval_hit_at_k": 0.0,
+  "source_page_accuracy": 0.0,
+  "avg_keyword_recall": 0.0555,
+  "avg_latency_ms": 855,
+  "results": [
+    {
+      "id": "q1_customer_protection_roles",
+      "question": "Apa saja peran Unit Pelindungan Nasabah menurut peraturan POJK No. 22 Tahun 2023?",
+      "status": "ok",
+      "answer_preview": "Tidak ditemukan dalam dokumen.",
+      "expected_pages": [
+        7
+      ],
+      "retrieved_pages": [],
+      "retrieval_hit": false,
+      "source_page_correct": false,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_missing": [
+        "mensosialisasikan",
+        "mengoordinasikan",
+        "pengaduan",
+        "Otoritas Jasa Keuangan",
+        "literasi",
+        "inklusi keuangan",
+        "pemantauan",
+        "evaluasi",
+        "pelaporan",
+        "Direksi"
+      ],
+      "latency_ms": 2887
+    },
+    {
+      "id": "q2_collection_time",
+      "question": "Jika Bank Mandiri menggunakan jasa Perusahaan Jasa Penagihan untuk menagih debitur, apakah penagihan boleh dilakukan pada jam 21.00?",
+      "status": "ok",
+      "answer_preview": "Tidak ditemukan dalam dokumen.",
+      "expected_pages": [
+        7
+      ],
+      "retrieved_pages": [],
+      "retrieval_hit": false,
+      "source_page_correct": false,
+      "keyword_recall": 0.333,
+      "keywords_found": [
+        "tidak"
+      ],
+      "keywords_missing": [
+        "08.00",
+        "20.00"
+      ],
+      "latency_ms": 516
+    },
+    {
+      "id": "q3_sector_growth",
+      "question": "Berapa nominal dan persentase pertumbuhan kredit yang diberikan di sektor tambang dan konstruksi?",
+      "status": "ok",
+      "answer_preview": "Tidak ditemukan dalam dokumen.",
+      "expected_pages": [
+        4
+      ],
+      "retrieved_pages": [],
+      "retrieval_hit": false,
+      "source_page_correct": false,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_missing": [
+        "Tambang",
+        "11.614.853",
+        "7,98",
+        "Konstruksi",
+        "8.264.848",
+        "8,27"
+      ],
+      "latency_ms": 441
+    },
+    {
+      "id": "q4_dpk_composition",
+      "question": "Sebutkan presentase komposisi dana pihak ketiga (DPK) di Bank Mandiri pada tahun 2024 dan 2025?",
+      "status": "ok",
+      "answer_preview": "Tidak ditemukan dalam dokumen.",
+      "expected_pages": [
+        6
+      ],
+      "retrieved_pages": [],
+      "retrieval_hit": false,
+      "source_page_correct": false,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_missing": [
+        "39,31",
+        "40,12",
+        "20,57",
+        "36,66",
+        "34,23",
+        "29,11"
+      ],
+      "latency_ms": 449
+    },
+    {
+      "id": "q5_complaint_flow",
+      "question": "Bagaimana alur penganganan nasabah di Bank Mandiri jika terdapat laporan pengaduan?",
+      "status": "ok",
+      "answer_preview": "Tidak ditemukan dalam dokumen.",
+      "expected_pages": [
+        8
+      ],
+      "retrieved_pages": [],
+      "retrieval_hit": false,
+      "source_page_correct": false,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_missing": [
+        "pengaduan",
+        "verifikasi",
+        "investigasi",
+        "nasabah"
+      ],
+      "latency_ms": 421
+    },
+    {
+      "id": "q6_complaint_channels",
+      "question": "Apa saja saluran pengaduan yang disediakan oleh Bank Mandiri?",
+      "status": "ok",
+      "answer_preview": "Tidak ditemukan dalam dokumen.",
+      "expected_pages": [
+        9
+      ],
+      "retrieved_pages": [],
+      "retrieval_hit": false,
+      "source_page_correct": false,
+      "keyword_recall": 0.0,
+      "keywords_found": [],
+      "keywords_missing": [
+        "14000",
+        "WhatsApp",
+        "email",
+        "cabang",
+        "Instagram"
+      ],
+      "latency_ms": 417
+    }
+  ]
+}

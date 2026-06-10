@@ -1,0 +1,49 @@
+[
+  {
+    "id": "q1_customer_protection_roles",
+    "question": "Apa saja peran Unit Pelindungan Nasabah menurut peraturan POJK No. 22 Tahun 2023?",
+    "expected_pages": [7],
+    "expected_keywords": [
+      "mensosialisasikan",
+      "mengoordinasikan",
+      "pengaduan",
+      "Otoritas Jasa Keuangan",
+      "literasi",
+      "inklusi keuangan",
+      "pemantauan",
+      "evaluasi",
+      "pelaporan",
+      "Direksi"
+    ]
+  },
+  {
+    "id": "q2_collection_time",
+    "question": "Jika Bank Mandiri menggunakan jasa Perusahaan Jasa Penagihan untuk menagih debitur, apakah penagihan boleh dilakukan pada jam 21.00?",
+    "expected_pages": [7],
+    "expected_keywords": ["tidak", "08.00", "20.00"]
+  },
+  {
+    "id": "q3_sector_growth",
+    "question": "Berapa nominal dan persentase pertumbuhan kredit yang diberikan di sektor tambang dan konstruksi?",
+    "expected_pages": [4],
+    "expected_keywords": ["Tambang", "11.614.853", "7,98", "Konstruksi", "8.264.848", "8,27"]
+  },
+  {
+    "id": "q4_dpk_composition",
+    "question": "Sebutkan presentase komposisi dana pihak ketiga (DPK) di Bank Mandiri pada tahun 2024 dan 2025?",
+    "expected_pages": [6],
+    "expected_keywords": ["39,31", "40,12", "20,57", "36,66", "34,23", "29,11"]
+  },
+  {
+    "id": "q5_complaint_flow",
+    "question": "Bagaimana alur penganganan nasabah di Bank Mandiri jika terdapat laporan pengaduan?",
+    "expected_pages": [8],
+    "expected_keywords": ["pengaduan", "verifikasi", "investigasi", "nasabah"]
+  },
+  {
+    "id": "q6_complaint_channels",
+    "question": "Apa saja saluran pengaduan yang disediakan oleh Bank Mandiri?",
+    "expected_pages": [9],
+    "expected_keywords": ["14000", "WhatsApp", "email", "cabang", "Instagram"]
+  }
+]
