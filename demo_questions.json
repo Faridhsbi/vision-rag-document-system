@@ -1,0 +1,26 @@
+[
+  {
+    "question": "Apa saja peran Unit Pelindungan Nasabah menurut peraturan POJK No. 22 Tahun 2023?",
+    "expected_source_page": 7
+  },
+  {
+    "question": "Jika Bank Mandiri menggunakan jasa Perusahaan Jasa Penagihan untuk menagih debitur, apakah penagihan boleh dilakukan pada jam 21.00?",
+    "expected_source_page": 7
+  },
+  {
+    "question": "Berapa nominal dan persentase pertumbuhan kredit yang diberikan di sektor tambang dan konstruksi?",
+    "expected_source_page": 4
+  },
+  {
+    "question": "Sebutkan presentase komposisi dana pihak ketiga (DPK) di Bank Mandiri pada tahun 2024 dan 2025?",
+    "expected_source_page": 6
+  },
+  {
+    "question": "Bagaimana alur penganganan nasabah di Bank Mandiri jika terdapat laporan pengaduan?",
+    "expected_source_page": 8
+  },
+  {
+    "question": "Apa saja saluran pengaduan yang disediakan oleh Bank Mandiri?",
+    "expected_source_page": 9
+  }
+]
