@@ -1,0 +1,35 @@
+# ── API ──────────────────────────────────────────────────────────────
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+python-multipart>=0.0.9
+pydantic-settings>=2.4,<3.0
+aiofiles>=23.0,<25.0
+
+# ── LangChain orchestration ─────────────────────────────────────────
+langchain>=0.3,<0.4
+langchain-core>=0.3,<0.4
+langchain-text-splitters>=0.3,<0.4
+langchain-google-genai>=2.0,<3.0
+langchain-chroma>=0.2,<1.0
+
+# ── Vector DB ────────────────────────────────────────────────────────
+chromadb>=0.5,<1.0
+
+# ── Google Gen AI SDK (used for vision interpreter) ──────────────────
+google-genai>=1.0,<2.0
+
+# ── PDF / Image processing ──────────────────────────────────────────
+PyMuPDF>=1.24,<2.0
+pdfplumber>=0.11,<1.0
+Pillow>=10.4,<12.0
+opencv-python>=4.10,<5.0
+numpy>=1.26,<3.0
+
+# ── OCR engine for Task B ───────────────────────────────────────────
+# If EasyOCR is too heavy, install pytesseract + the Tesseract binary
+# and run with --engine tesseract.
+easyocr>=1.7,<2.0
+
+# ── Testing ──────────────────────────────────────────────────────────
+pytest>=8.0,<9.0
+httpx>=0.27,<1.0
