@@ -8,13 +8,13 @@ app_port: 8000
 pinned: false
 ---
 
-# AI Engineer Intern Technical Test
+# Vision RAG & Document Layout System
 
 > Multimodal RAG API + Layout-Aware Text Extraction Pipeline
 
-This repository contains two deliverables for the AI Engineer Intern technical test:
+This repository contains a two-part system for intelligent document retrieval and layout extraction:
 
-1. **Multimodal RAG REST API** — Ingests the Bank Mandiri 2025 PDF (text, tables, charts, infographics) into a searchable knowledge base, then answers questions via a REST API with page-level source metadata.
+1. **Multimodal RAG REST API** — Ingests document PDFs (text, tables, charts, infographics) into a searchable database, then answers user queries via a REST API with page-level source citations.
 2. **Layout-Aware Text Extraction** — Converts slide presentation images into editable HTML overlays using OCR, with text inpainting to eliminate double-text artifacts.
 
 ---
