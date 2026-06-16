@@ -38,10 +38,6 @@ COPY --from=builder /install /usr/local
 
 # Copy application code
 COPY app/ app/
-COPY layout_extraction/ layout_extraction/
-COPY input/ input/
-COPY demo_questions.json .
-COPY .env.example .env.example
 
 # Create data directories
 RUN mkdir -p data/raw data/processed data/chroma
