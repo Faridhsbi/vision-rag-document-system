@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from pydantic import ConfigDict
+
 from langchain_core.callbacks import CallbackManagerForRetrieverRun
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
@@ -28,8 +30,6 @@ class DocumentRetriever(BaseRetriever):
     vector_store: Any  # ChromaVectorStore
     document_id: str = ""
     top_k: int = 5
-
-    from pydantic import ConfigDict
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
