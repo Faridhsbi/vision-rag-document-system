@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimodal RAG Demo</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-brain-circuit"></i>
+                </div>
+                <div class="brand-title">
+                    <h1>Multimodal RAG</h1>
+                    <span class="sub-title">Document QA System</span>
+                </div>
+            </div>
+            <div class="header-status">
+                <div id="connection-badge" class="status-badge status-loading">
+                    <span class="pulse-dot"></span>
+                    <span id="connection-status">Connecting to API...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="app-main">
+            <!-- Sidebar Panel: Document Management -->
+            <section class="sidebar-panel">
+                <div class="panel-card upload-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-cloud-arrow-up"></i> Ingest Document</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="upload-form">
+                            <div class="drag-zone" id="drop-zone">
+                                <i class="fa-regular fa-file-pdf drag-icon"></i>
+                                <p class="drag-text">Drag & Drop PDF here or <span>browse files</span></p>
+                                <span class="drag-subtext">Max size: 50MB</span>
+                                <input type="file" id="file-input" name="file" accept=".pdf" style="display: none;">
+                            </div>
+                        </form>
+                        
+                        <!-- Upload Progress and Status -->
+                        <div id="upload-progress-container" class="upload-progress-container hidden">
+                            <div class="progress-info">
+                                <span id="upload-filename">document.pdf</span>
+                                <span id="upload-percentage">0%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div id="upload-progress-bar" class="progress-bar-fg" style="width: 0%"></div>
+                            </div>
+                            <div id="upload-status-message" class="upload-status-text">Uploading...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-card documents-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-folder-open"></i> Knowledge Base</h2>
+                        <button id="refresh-docs" class="icon-btn" title="Refresh list">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="doc-select-container">
+                            <label for="doc-select">Active Target Document:</label>
+                            <select id="doc-select" class="custom-select">
+                                <option value="" disabled selected>Select a document...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="doc-list-title">Ingested Files:</div>
+                        <div id="documents-list" class="documents-list">
+                            <div class="empty-docs-placeholder">
+                                <i class="fa-solid fa-inbox"></i>
+                                <p>No documents ingested yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Panel: Chat & Retrieval Workspace -->
+            <section class="workspace-panel">
+                <div class="panel-card chat-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-comments"></i> Interactive QA</h2>
+                        <div class="chat-actions">
+                            <button id="clear-chat" class="text-btn" title="Clear chat history">
+                                <i class="fa-solid fa-trash-can"></i> Clear Chat
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body chat-workspace">
+                        <!-- Chat Messages Container -->
+                        <div id="chat-messages" class="chat-messages">
+                            <div class="system-message">
+                                <div class="message-icon"><i class="fa-solid fa-circle-info"></i></div>
+                                <div class="message-text">
+                                    Welcome to the Multimodal RAG Demo. To begin, please select an active document from the left pane or upload a new PDF. Once selected, you can ask questions regarding text, tables, and visual components.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sources Inspection Drawer (Mobile-friendly/Responsive Sidebar detail) -->
+                        <div id="sources-drawer" class="sources-drawer hidden">
+                            <div class="drawer-header">
+                                <h3><i class="fa-solid fa-quote-left"></i> Source References</h3>
+                                <button id="close-drawer" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                            <div id="drawer-content" class="drawer-content">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer chat-controls">
+                        <div id="chat-alert" class="chat-alert hidden">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span id="chat-alert-text">Please select a document from the sidebar first.</span>
+                        </div>
+                        <form id="chat-form" class="chat-input-wrapper">
+                            <input 
+                                type="text" 
+                                id="chat-input" 
+                                placeholder="Type your question here..."
+                                autocomplete="off"
+                                disabled
+                            >
+                            <button type="submit" id="chat-submit" class="send-btn" disabled>
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Source Excerpt Modal -->
+    <div id="source-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <span id="modal-source-badge" class="source-badge text-badge">Text</span>
+                    <h3 id="modal-source-title">Source Excerpt</h3>
+                </div>
+                <button id="close-modal" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">Page</span>
+                        <span id="modal-page-num" class="meta-value">0</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Relevance Score</span>
+                        <span id="modal-score" class="meta-value">0.00</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Chunk ID</span>
+                        <span id="modal-chunk-id" class="meta-value code-text">chunk_1</span>
+                    </div>
+                </div>
+                <div class="excerpt-container">
+                    <pre id="modal-excerpt-text"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>

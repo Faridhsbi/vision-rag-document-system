@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from app.api.documents import router as documents_router
 from app.api.ingest import router as ingest_router
@@ -27,4 +28,7 @@ async def health() -> dict[str, str]:
 app.include_router(ingest_router)
 app.include_router(query_router)
 app.include_router(documents_router)
+
+# Serve monolithic static web application
+app.mount("/", StaticFiles(directory="app/static", html=True), name="static")
 

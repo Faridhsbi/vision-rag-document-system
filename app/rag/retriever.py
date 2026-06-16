@@ -29,8 +29,9 @@ class DocumentRetriever(BaseRetriever):
     document_id: str = ""
     top_k: int = 5
 
-    class Config:
-        arbitrary_types_allowed = True
+    from pydantic import ConfigDict
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     # ── LangChain Retriever interface ────────────────────────────────
 
