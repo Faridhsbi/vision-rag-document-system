@@ -1,3 +1,13 @@
+---
+title: Multimodal RAG API
+emoji: 🚀
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 8000
+pinned: false
+---
+
 # AI Engineer Intern Technical Test
 
 > Multimodal RAG API + Layout-Aware Text Extraction Pipeline
