@@ -11,7 +11,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
     <div class="app-container">
@@ -26,10 +26,15 @@
                     <span class="sub-title">Document QA System</span>
                 </div>
             </div>
-            <div class="header-status">
-                <div id="connection-badge" class="status-badge status-loading">
-                    <span class="pulse-dot"></span>
-                    <span id="connection-status">Connecting to API...</span>
+            <div class="header-controls" style="display: flex; align-items: center; gap: 12px;">
+                <button id="theme-toggle" class="icon-btn theme-toggle-btn" title="Toggle Light/Dark Mode" style="border: 1px solid var(--border-color); background: var(--bg-input);">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="header-status">
+                    <div id="connection-badge" class="status-badge status-loading">
+                        <span class="pulse-dot"></span>
+                        <span id="connection-status">Connecting to API...</span>
+                    </div>
                 </div>
             </div>
         </header>
@@ -74,13 +79,6 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="doc-select-container">
-                            <label for="doc-select">Active Target Document:</label>
-                            <select id="doc-select" class="custom-select">
-                                <option value="" disabled selected>Select a document...</option>
-                            </select>
-                        </div>
-                        
                         <div class="doc-list-title">Ingested Files:</div>
                         <div id="documents-list" class="documents-list">
                             <div class="empty-docs-placeholder">
@@ -106,11 +104,31 @@
                     
                     <div class="card-body chat-workspace">
                         <!-- Chat Messages Container -->
-                        <div id="chat-messages" class="chat-messages">
-                            <div class="system-message">
-                                <div class="message-icon"><i class="fa-solid fa-circle-info"></i></div>
-                                <div class="message-text">
-                                    Welcome to the Multimodal RAG Demo. To begin, please select an active document from the left pane or upload a new PDF. Once selected, you can ask questions regarding text, tables, and visual components.
+                        <div id="chat-messages" class="chat-messages hidden"></div>
+
+                        <!-- Onboarding Overlay Panel -->
+                        <div id="onboarding-panel" class="onboarding-panel">
+                            <div class="onboarding-hero">
+                                <div class="onboarding-hero-icon">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+                                <h3>Mulai Analisis Dokumen Pintar</h3>
+                                <p>Selamat datang di Multimodal RAG. Ikuti langkah sederhana di bawah untuk mengekstrak informasi dari berkas PDF Anda.</p>
+                            </div>
+                            <div class="onboarding-steps">
+                                <div class="onboard-step" id="onboard-step-1">
+                                    <div class="step-badge">1</div>
+                                    <div class="step-content">
+                                        <h4>Unggah Dokumen PDF Baru</h4>
+                                        <p>Seret file PDF ke area drop di panel kiri, atau klik untuk memilih berkas dari komputer Anda.</p>
+                                    </div>
+                                </div>
+                                <div class="onboard-step" id="onboard-step-2">
+                                    <div class="step-badge">2</div>
+                                    <div class="step-content">
+                                        <h4>Pilih Dokumen Aktif</h4>
+                                        <p>Pilih berkas dari daftar "Ingested Files" di bawah untuk mengaktifkan jendela tanya jawab interaktif.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -184,6 +202,9 @@
     </div>
     
     <!-- Custom JavaScript -->
-    <script src="app.js"></script>
+    <script src="app.js?v=4"></script>
+<!-- impeccable-live-start -->
+<script src="http://localhost:8400/live.js"></script>
+<!-- impeccable-live-end -->
 </body>
 </html>
