@@ -2,6 +2,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // API endpoint base URL (empty string means same origin, which works perfectly for monolithic apps)
     const API_BASE = '';
 
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('i');
+    
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeIcon.className = 'fa-solid fa-sun';
+    } else {
+        document.body.classList.remove('dark-mode');
+        themeIcon.className = 'fa-solid fa-moon';
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        if (document.body.classList.contains('dark-mode')) {
+            document.body.classList.remove('dark-mode');
+            themeIcon.className = 'fa-solid fa-moon';
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.body.classList.add('dark-mode');
+            themeIcon.className = 'fa-solid fa-sun';
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+
     // State
     let activeDocumentId = '';
     let currentSources = []; // Store sources for the current session query results
@@ -9,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const connectionBadge = document.getElementById('connection-badge');
     const connectionStatus = document.getElementById('connection-status');
-    const docSelect = document.getElementById('doc-select');
     const documentsList = document.getElementById('documents-list');
     const refreshDocsBtn = document.getElementById('refresh-docs');
     
@@ -28,6 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatMessages = document.getElementById('chat-messages');
     const chatAlert = document.getElementById('chat-alert');
     const clearChatBtn = document.getElementById('clear-chat');
+    const onboardingPanel = document.getElementById('onboarding-panel');
+    const onboardStep1 = document.getElementById('onboard-step-1');
+    const onboardStep2 = document.getElementById('onboard-step-2');
 
     const sourceModal = document.getElementById('source-modal');
     const closeModalBtn = document.getElementById('close-modal');
@@ -82,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`${API_BASE}/documents`);
             if (!response.ok) throw new Error('Failed to fetch documents');
             const docs = await response.json();
-            renderDocumentSelect(docs);
             renderDocumentList(docs);
         } catch (error) {
             console.error('Error fetching documents:', error);
@@ -91,35 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     refreshDocsBtn.addEventListener('click', fetchDocuments);
-
-    // Render dropdown selector
-    function renderDocumentSelect(docs) {
-        // Keep the default option
-        const currentVal = docSelect.value;
-        docSelect.innerHTML = '<option value="" disabled selected>Select a document...</option>';
-        
-        if (docs.length === 0) {
-            updateChatControlsState();
-            return;
-        }
-
-        docs.forEach(doc => {
-            const option = document.createElement('option');
-            option.value = doc.document_id;
-            option.textContent = doc.filename || doc.document_id;
-            docSelect.appendChild(option);
-        });
-
-        // Restore value if it still exists
-        if (docs.some(d => d.document_id === currentVal)) {
-            docSelect.value = currentVal;
-            activeDocumentId = currentVal;
-        } else {
-            activeDocumentId = '';
-        }
-        updateChatControlsState();
-    }
-
     // Render left panel document list
     function renderDocumentList(docs) {
         if (docs.length === 0) {
@@ -135,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         documentsList.innerHTML = '';
         docs.forEach(doc => {
             const pageCount = doc.pages ? doc.pages.length : 0;
-            const docId = doc.document_id;
+            const docId = doc.document_id || doc.id;
             const isSelected = docId === activeDocumentId;
 
             const docItem = document.createElement('div');
@@ -147,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <i class="fa-regular fa-file-pdf doc-info-icon"></i>
                     <div class="doc-details">
                         <div class="doc-name" title="${doc.filename || docId}">${doc.filename || docId}</div>
-                        <div class="doc-meta">${pageCount} pages • ${doc.chunks} chunks</div>
+                        <div class="doc-meta">${pageCount} pages • ${doc.chunks || 0} chunks</div>
                     </div>
                 </div>
                 <button class="icon-btn delete-btn" title="Delete document" data-id="${docId}">
@@ -155,10 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
             `;
 
-            // Make selecting item from list select it in the dropdown too
+            // Make selecting item from list select it
             docItem.addEventListener('click', (e) => {
                 if (e.target.closest('.delete-btn')) return; // ignore delete clicks
-                docSelect.value = docId;
                 handleDocumentChange(docId);
             });
 
@@ -175,11 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Handle document selection change
-    docSelect.addEventListener('change', (e) => {
-        handleDocumentChange(e.target.value);
-    });
-
     function handleDocumentChange(docId) {
         activeDocumentId = docId;
         updateChatControlsState();
@@ -194,8 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Add a small system notification in chat
-        appendSystemMessage(`Target document switched to: ${docSelect.options[docSelect.selectedIndex].text}`);
+        const activeItem = documentsList.querySelector(`.doc-item[data-id="${docId}"]`);
+        const filename = activeItem ? activeItem.querySelector('.doc-name').textContent : docId;
+        appendSystemMessage(`Target document switched to: ${filename}`);
     }
 
     // Delete document API call
@@ -210,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (activeDocumentId === docId) {
                 activeDocumentId = '';
-                docSelect.value = '';
             }
             
             await fetchDocuments();
@@ -220,17 +211,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // State controller for enabling/disabling Chat Inputs
+    // State controller for enabling/disabling Chat Inputs and managing Onboarding
     function updateChatControlsState() {
         if (activeDocumentId) {
             chatInput.removeAttribute('disabled');
             chatSubmit.removeAttribute('disabled');
             chatAlert.classList.add('hidden');
+            chatMessages.classList.remove('hidden');
+            onboardingPanel.classList.add('hidden');
         } else {
             chatInput.setAttribute('disabled', 'true');
             chatSubmit.setAttribute('disabled', 'true');
             chatAlert.classList.remove('hidden');
+            chatMessages.classList.add('hidden');
+            onboardingPanel.classList.remove('hidden');
         }
+    }
+
+    // Interactive Onboarding Steps
+    if (onboardStep1) {
+        onboardStep1.addEventListener('click', () => {
+            dropZone.click();
+        });
+    }
+    if (onboardStep2) {
+        onboardStep2.addEventListener('click', () => {
+            const kbCard = document.querySelector('.documents-card');
+            if (kbCard) {
+                kbCard.style.transform = 'scale(1.02)';
+                kbCard.style.borderColor = 'var(--primary-light)';
+                kbCard.style.boxShadow = '0 0 15px var(--primary-glow)';
+                setTimeout(() => {
+                    kbCard.style.transform = '';
+                    kbCard.style.borderColor = '';
+                    kbCard.style.boxShadow = '';
+                }, 1500);
+            }
+        });
     }
 
     // ==========================================================================
@@ -321,7 +338,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Reload and select this new document
                     await fetchDocuments();
-                    docSelect.value = response.document_id;
                     handleDocumentChange(response.document_id);
                     
                     // Log ingestion statistics to chat
